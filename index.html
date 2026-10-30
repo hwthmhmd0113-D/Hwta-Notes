@@ -3,683 +3,811 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#080d1c">
+<meta name="theme-color" content="#07152e">
 <title>Hwta Notes</title>
 
 <style>
 :root {
-    --bg:#080d1c;
-    --card:#111a2e;
-    --card2:#17233b;
-    --text:#ffffff;
-    --muted:#9aa9c3;
-    --blue:#0756a5;
-    --red:#a71930;
-    --gold:#edbd55;
+ --bg:#080f20;
+ --card:#121e35;
+ --text:#fff;
+ --muted:#a8b4ca;
+ --red:#a71930;
+ --blue:#0756a5;
+ --gold:#edbd55;
 }
 
-* {box-sizing:border-box}
+*{box-sizing:border-box}
 
-body {
-    margin:0;
-    background:var(--bg);
-    color:var(--text);
-    font-family:Arial,sans-serif;
-    min-height:100vh;
+body{
+ margin:0;
+ font-family:Arial,sans-serif;
+ background:var(--bg);
+ color:var(--text);
 }
 
-body.light {
-    --bg:#edf1f8;
-    --card:#ffffff;
-    --card2:#e2e9f4;
-    --text:#15223b;
-    --muted:#64748b;
+body.light{
+ --bg:#edf1f8;
+ --card:#fff;
+ --text:#15223b;
+ --muted:#64748b;
 }
 
-body:before {
-    content:"";
-    position:fixed;
-    inset:0;
-    background:
-    linear-gradient(rgba(5,10,25,.88),rgba(5,10,25,.94)),
-    url("https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg")
-    center 48% / min(85vw,500px) no-repeat;
-    opacity:.20;
-    pointer-events:none;
-    z-index:-1;
+body:before{
+ content:"";
+ position:fixed;
+ inset:0;
+ background:
+ linear-gradient(rgba(5,10,25,.88),rgba(5,10,25,.94)),
+ url("https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg")
+ center/75% no-repeat;
+ opacity:.25;
+ pointer-events:none;
+ z-index:-1;
 }
 
-header {
-    padding:23px 20px;
-    background:linear-gradient(110deg,#071d42,#092d61,#641329);
-    border-bottom:2px solid var(--gold);
+/* LOADING SCREEN */
+
+#splash{
+ position:fixed;
+ inset:0;
+ background:linear-gradient(145deg,#061633,#102d59,#65152d);
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ flex-direction:column;
+ z-index:1000;
+ transition:opacity .6s;
 }
 
-.brand {
-    display:flex;
-    align-items:center;
-    gap:13px;
+#splash img{
+ width:115px;
+ height:115px;
+ object-fit:contain;
+ animation:float 2s infinite ease-in-out;
 }
 
-.brand img {
-    width:52px;
-    height:52px;
-    object-fit:contain;
+#splash h1{
+ font-size:30px;
+ margin:18px 0 5px;
 }
 
-.brand h1 {
-    margin:0;
-    font-size:27px;
+#splash h1 span{color:var(--gold)}
+
+#splash p{
+ color:#ccd5e7;
+ font-size:13px;
 }
 
-.brand span {
-    color:var(--gold);
+.loader{
+ width:160px;
+ height:5px;
+ background:#ffffff30;
+ border-radius:10px;
+ overflow:hidden;
+ margin-top:25px;
 }
 
-header p {
-    margin:9px 0 0;
-    color:#d1d9eb;
-    font-size:13px;
+.loader:after{
+ content:"";
+ display:block;
+ width:45%;
+ height:100%;
+ background:var(--gold);
+ animation:loading 1.3s infinite;
 }
 
-.container {
-    max-width:800px;
-    margin:auto;
-    padding:18px;
-    position:relative;
+@keyframes loading{
+ from{transform:translateX(-100%)}
+ to{transform:translateX(350%)}
 }
 
-input,textarea,select {
-    width:100%;
-    padding:14px;
-    border:1px solid #35435d;
-    border-radius:12px;
-    background:var(--card);
-    color:var(--text);
-    font-size:15px;
-    margin-bottom:12px;
-    outline:none;
+@keyframes float{
+ 50%{transform:translateY(-10px)}
 }
 
-textarea {
-    min-height:130px;
-    resize:vertical;
+/* HEADER */
+
+header{
+ padding:22px;
+ background:linear-gradient(110deg,#071d42,#092d61,#641329);
+ border-bottom:2px solid var(--gold);
+ position:relative;
 }
 
-button {
-    border:0;
-    padding:12px 16px;
-    border-radius:10px;
-    background:linear-gradient(110deg,#0756a5,#a71930);
-    color:white;
-    font-weight:bold;
-    cursor:pointer;
+.brand{
+ display:flex;
+ align-items:center;
+ gap:13px;
 }
 
-button:active {transform:scale(.97)}
-
-.top-actions {
-    display:flex;
-    gap:9px;
-    flex-wrap:wrap;
-    margin-bottom:17px;
+.brand img{
+ width:52px;
+ height:52px;
+ object-fit:contain;
 }
 
-.top-actions button {
-    flex:1;
+.brand h1{
+ margin:0;
+ font-size:26px;
 }
 
-.section-title {
-    font-size:18px;
-    margin:25px 0 13px;
+.brand span{color:var(--gold)}
+
+header p{
+ margin:9px 0 0;
+ color:#d1d9eb;
+ font-size:13px;
 }
 
-.filters {
-    display:flex;
-    gap:8px;
-    overflow-x:auto;
-    padding-bottom:12px;
+.container{
+ max-width:800px;
+ margin:auto;
+ padding:18px;
+ position:relative;
 }
 
-.filters button {
-    white-space:nowrap;
-    background:var(--card2);
-    border:1px solid #35435d;
+button{
+ border:0;
+ padding:12px 15px;
+ border-radius:10px;
+ background:linear-gradient(110deg,#0756a5,#a71930);
+ color:white;
+ font-weight:bold;
+ cursor:pointer;
 }
 
-.filters button.active {
-    background:linear-gradient(110deg,#0756a5,#a71930);
+button:active{transform:scale(.97)}
+
+input,textarea,select{
+ width:100%;
+ padding:14px;
+ border:1px solid #35435d;
+ border-radius:11px;
+ background:var(--card);
+ color:var(--text);
+ font-size:15px;
+ margin-bottom:12px;
+ outline:none;
 }
 
-.note {
-    background:var(--card);
-    border:1px solid #34435f;
-    border-left:4px solid var(--red);
-    border-radius:14px;
-    padding:16px;
-    margin-bottom:13px;
-    overflow-wrap:anywhere;
+textarea{
+ min-height:130px;
+ resize:vertical;
 }
 
-.note.pinned {
-    border-left-color:var(--gold);
+.actions{
+ display:flex;
+ gap:8px;
+ flex-wrap:wrap;
+ margin-bottom:20px;
 }
 
-.note h3 {
-    margin:0 0 10px;
-    color:var(--gold);
+.actions button{flex:1}
+
+.section{
+ background:var(--card);
+ border:1px solid #34435f;
+ border-radius:14px;
+ padding:17px;
+ margin-bottom:15px;
 }
 
-.note p {
-    white-space:pre-wrap;
-    line-height:1.6;
-    color:var(--muted);
+#editor,#settings{display:none}
+
+.section h2{
+ font-size:19px;
+ margin-top:0;
 }
 
-.note small {
-    color:var(--muted);
+.filters{
+ display:flex;
+ gap:8px;
+ overflow-x:auto;
+ padding-bottom:12px;
 }
 
-.note-actions {
-    display:flex;
-    gap:7px;
-    flex-wrap:wrap;
-    margin-top:13px;
+.filters button{
+ white-space:nowrap;
+ background:var(--card);
+ border:1px solid #34435f;
 }
 
-.note-actions button {
-    font-size:12px;
-    padding:9px 11px;
+.filters button.active{
+ background:linear-gradient(110deg,#0756a5,#a71930);
 }
 
-.delete {background:#a71930}
-.secondary {background:#34435f}
-
-.category-label {
-    display:inline-block;
-    background:var(--card2);
-    padding:5px 9px;
-    border-radius:7px;
-    font-size:11px;
-    margin-top:5px;
+.note{
+ background:var(--card);
+ border:1px solid #34435f;
+ border-left:4px solid var(--red);
+ border-radius:13px;
+ padding:16px;
+ margin-bottom:13px;
+ overflow-wrap:anywhere;
 }
 
-.empty {
-    text-align:center;
-    color:var(--muted);
-    padding:35px 10px;
+.note.pinned{border-left-color:var(--gold)}
+
+.note h3{color:var(--gold);margin-top:0}
+
+.note p{
+ white-space:pre-wrap;
+ line-height:1.6;
+ color:var(--muted);
 }
 
-#settings {
-    display:none;
-    background:var(--card);
-    padding:18px;
-    border-radius:15px;
-    margin-top:20px;
+.note small{color:var(--muted)}
+
+.note-actions{
+ display:flex;
+ flex-wrap:wrap;
+ gap:7px;
+ margin-top:13px;
 }
 
-.footer {
-    text-align:center;
-    padding:25px;
-    color:var(--muted);
-    font-size:13px;
+.note-actions button{
+ font-size:12px;
+ padding:9px;
 }
 
-.footer strong {color:var(--gold)}
+.secondary{background:#34435f}
+.delete{background:#a71930}
 
-.lock-screen {
-    position:fixed;
-    inset:0;
-    z-index:20;
-    background:#080d1c;
-    display:none;
-    align-items:center;
-    justify-content:center;
-    padding:25px;
+.badge{
+ display:inline-block;
+ padding:5px 9px;
+ background:#0756a555;
+ border-radius:7px;
+ font-size:11px;
 }
 
-.lock-box {
-    text-align:center;
-    width:100%;
-    max-width:350px;
+.empty{
+ text-align:center;
+ color:var(--muted);
+ padding:30px;
 }
 
-.lock-box img {
-    width:100px;
-    height:100px;
-    object-fit:contain;
-    margin-bottom:15px;
+.footer{
+ text-align:center;
+ padding:25px;
+ color:var(--muted);
+ font-size:13px;
 }
 
-#pinInput {
-    text-align:center;
-    letter-spacing:12px;
-    font-size:24px;
+.footer strong{color:var(--gold)}
+
+.setting-row{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:10px;
+ margin:15px 0;
+ flex-wrap:wrap;
 }
 
-@media(max-width:480px) {
-    .brand h1 {font-size:23px}
-    .container {padding:14px}
+#lockScreen{
+ display:none;
+ position:fixed;
+ inset:0;
+ background:#080f20;
+ z-index:900;
+ align-items:center;
+ justify-content:center;
+ padding:25px;
+}
+
+.lock-box{
+ text-align:center;
+ width:100%;
+ max-width:350px;
+}
+
+.lock-box img{
+ width:100px;
+ height:100px;
+ object-fit:contain;
+}
+
+#pinInput{
+ text-align:center;
+ letter-spacing:10px;
+ font-size:22px;
+}
+
+@media(max-width:450px){
+ .brand h1{font-size:23px}
+ .container{padding:13px}
 }
 </style>
 </head>
 
 <body>
 
+<!-- SPLASH -->
+
+<div id="splash">
+ <img src="https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg">
+ <h1>HWTA <span>NOTES</span></h1>
+ <p>YOUR IDEAS. YOUR SPACE.</p>
+ <div class="loader"></div>
+ <p>Inspired by FC Barcelona 🔵🔴</p>
+</div>
+
 <header>
-    <div class="brand">
-        <img src="https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg" alt="Barcelona">
-        <h1>Hwta <span>Notes</span></h1>
-    </div>
-    <p>Your ideas. Your space. Més que un club 🔵🔴</p>
+ <div class="brand">
+  <img src="https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg">
+  <h1>Hwta <span>Notes</span></h1>
+ </div>
+ <p>Més que un club 🔵🔴</p>
 </header>
 
 <div class="container">
 
-    <div class="top-actions">
-        <button onclick="showEditor()">＋ New Note</button>
-        <button onclick="toggleTheme()">🌙 Theme</button>
-        <button onclick="toggleSettings()">⚙ Settings</button>
-    </div>
+ <div class="actions">
+  <button id="newBtn">＋ New Note</button>
+  <button id="themeBtn">🌙 Theme</button>
+  <button id="settingsBtn">⚙ Settings</button>
+ </div>
 
-    <div id="editor" class="note" style="display:none">
-        <h3 id="editorTitle">Create Note</h3>
+ <!-- EDITOR -->
 
-        <input id="title" placeholder="Note title...">
+ <div id="editor" class="section">
+  <h2 id="editorHeading">Create Note</h2>
 
-        <textarea id="content" placeholder="Write your thoughts..."></textarea>
+  <input id="title" placeholder="Note title">
 
-        <select id="category">
-            <option>General</option>
-            <option>Personal</option>
-            <option>School</option>
-            <option>Work</option>
-            <option>Football</option>
-            <option>Goals</option>
-            <option>Ideas</option>
-        </select>
+  <textarea id="content" placeholder="Write your thoughts..."></textarea>
 
-        <label>
-            <input type="checkbox" id="important" style="width:auto">
-            ⭐ Important note
-        </label>
+  <select id="category">
+   <option>General</option>
+   <option>Personal</option>
+   <option>School</option>
+   <option>Football</option>
+   <option>Goals</option>
+   <option>Ideas</option>
+   <option>Work</option>
+  </select>
 
-        <br><br>
+  <label><input type="checkbox" id="important" style="width:auto"> ⭐ Important</label>
+  <br>
+  <label><input type="checkbox" id="pinned" style="width:auto"> 📌 Pin Note</label>
+  <br><br>
 
-        <label>
-            <input type="checkbox" id="pinned" style="width:auto">
-            📌 Pin note
-        </label>
+  <button id="saveBtn">Save Note</button>
+  <button id="cancelBtn" class="secondary">Cancel</button>
+ </div>
 
-        <br><br>
+ <!-- SEARCH -->
 
-        <button onclick="saveNote()">Save Note</button>
-        <button class="secondary" onclick="cancelEditor()">Cancel</button>
-    </div>
+ <input id="search" placeholder="🔍 Search notes...">
 
-    <input id="search" placeholder="🔍 Search your notes..." oninput="renderNotes()">
+ <div class="filters">
+  <button class="active" data-filter="All">All</button>
+  <button data-filter="Pinned">📌 Pinned</button>
+  <button data-filter="Important">⭐ Important</button>
+  <button data-filter="Football">⚽ Football</button>
+  <button data-filter="School">🎓 School</button>
+  <button data-filter="Personal">👤 Personal</button>
+  <button data-filter="Goals">🎯 Goals</button>
+ </div>
 
-    <div class="filters">
-        <button class="active" onclick="setFilter('All',this)">All</button>
-        <button onclick="setFilter('Pinned',this)">📌 Pinned</button>
-        <button onclick="setFilter('Important',this)">⭐ Important</button>
-        <button onclick="setFilter('Football',this)">⚽ Football</button>
-        <button onclick="setFilter('School',this)">🎓 School</button>
-        <button onclick="setFilter('Personal',this)">👤 Personal</button>
-        <button onclick="setFilter('Work',this)">💼 Work</button>
-        <button onclick="setFilter('Goals',this)">🎯 Goals</button>
-    </div>
+ <h2>My Notes</h2>
+ <div id="notes"></div>
 
-    <h2 class="section-title">My Notes</h2>
+ <!-- SETTINGS -->
 
-    <div id="notes"></div>
+ <div id="settings" class="section">
 
-    <div id="settings">
+  <h2>⚙ Settings</h2>
 
-        <h2>⚙ Settings</h2>
+  <div class="setting-row">
+   <span>Appearance</span>
+   <button id="settingTheme">Change Theme</button>
+  </div>
 
-        <p>Application appearance</p>
+  <hr>
 
-        <button onclick="toggleTheme()">Change Theme</button>
+  <h3>🔐 Security</h3>
 
-        <hr>
+  <div class="setting-row">
+   <span>Application PIN</span>
+   <button id="setPin">Set PIN</button>
+  </div>
 
-        <h3>🔐 Security</h3>
+  <button id="removePin" class="delete">Remove PIN</button>
 
-        <button onclick="setPassword()">Set / Change PIN</button>
-        <button class="delete" onclick="removePassword()">Remove PIN</button>
+  <hr>
 
-        <hr>
+  <h3>💾 Backup & Restore</h3>
 
-        <h3>💾 Backup & Restore</h3>
+  <button id="exportBtn">Export Notes</button>
 
-        <button onclick="backupNotes()">Export Notes</button>
+  <br><br>
 
-        <br><br>
+  <input type="file" id="backupFile" accept=".json">
 
-        <input type="file" id="restoreFile" accept=".json">
+  <button id="restoreBtn">Restore Notes</button>
 
-        <button onclick="restoreNotes()">Restore Notes</button>
+  <hr>
 
-        <hr>
+  <h3>About Hwta Notes</h3>
+  <p>Version 3.0</p>
+  <p>Made with passion 🔵🔴</p>
 
-        <h3>About</h3>
-        <p>Hwta Notes v2.0</p>
-        <p>Made with passion 🔵🔴</p>
-
-    </div>
+ </div>
 
 </div>
 
 <div class="footer">
-    <strong>HWTA NOTES</strong><br>
-    Més que un club ❤️💙
+ <strong>HWTA NOTES</strong>
+ <p>Més que un club ❤️💙</p>
 </div>
 
-<div class="lock-screen" id="lockScreen">
-    <div class="lock-box">
-        <img src="https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg">
-        <h2>Hwta Notes</h2>
-        <p>Enter your PIN</p>
-        <input id="pinInput" type="password" inputmode="numeric" maxlength="8">
-        <button onclick="unlock()">Unlock</button>
-        <p id="lockMessage"></p>
-    </div>
+<!-- LOCK -->
+
+<div id="lockScreen">
+ <div class="lock-box">
+  <img src="https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg">
+  <h2>Hwta Notes</h2>
+  <p>Enter your PIN</p>
+  <input id="pinInput" type="password" inputmode="numeric" maxlength="8">
+  <button id="unlockBtn">Unlock</button>
+  <p id="lockMessage"></p>
+ </div>
 </div>
 
 <script>
 
-let notes = JSON.parse(localStorage.getItem("hwta_notes_v2") || "[]");
+const $ = id => document.getElementById(id);
 
+let notes = JSON.parse(localStorage.getItem("hwta_notes_v3") || "[]");
 let editing = null;
-let currentFilter = "All";
+let filter = "All";
 
-function saveData() {
-    localStorage.setItem("hwta_notes_v2",JSON.stringify(notes));
+function saveData(){
+ localStorage.setItem("hwta_notes_v3",JSON.stringify(notes));
 }
 
-function showEditor() {
-    editing = null;
-    document.getElementById("editor").style.display="block";
-    document.getElementById("editorTitle").textContent="Create Note";
-    document.getElementById("title").value="";
-    document.getElementById("content").value="";
-    document.getElementById("category").value="General";
-    document.getElementById("important").checked=false;
-    document.getElementById("pinned").checked=false;
-    window.scrollTo(0,0);
+function render(){
+
+ const box=$("notes");
+ const search=$("search").value.toLowerCase();
+
+ box.innerHTML="";
+
+ let list=notes.filter(n=>{
+
+  const found=n.title.toLowerCase().includes(search) ||
+              n.content.toLowerCase().includes(search);
+
+  const matches =
+   filter==="All" ||
+   (filter==="Pinned" && n.pinned) ||
+   (filter==="Important" && n.important) ||
+   n.category===filter;
+
+  return found && matches;
+
+ }).sort((a,b)=>Number(b.pinned)-Number(a.pinned));
+
+ if(!list.length){
+  box.innerHTML='<div class="empty">No notes found. Start writing!</div>';
+  return;
+ }
+
+ list.forEach(n=>{
+
+  const card=document.createElement("div");
+  card.className="note"+(n.pinned?" pinned":"");
+
+  const h=document.createElement("h3");
+  h.textContent=(n.pinned?"📌 ":"")+(n.important?"⭐ ":"")+n.title;
+
+  const p=document.createElement("p");
+  p.textContent=n.content;
+
+  const badge=document.createElement("span");
+  badge.className="badge";
+  badge.textContent=n.category;
+
+  const date=document.createElement("small");
+  date.textContent="\n"+n.date;
+
+  const actions=document.createElement("div");
+  actions.className="note-actions";
+
+  function addButton(label,fn,cls){
+   const b=document.createElement("button");
+   b.textContent=label;
+   b.className=cls||"secondary";
+   b.addEventListener("click",fn);
+   actions.appendChild(b);
+  }
+
+  addButton("✏ Edit",()=>editNote(n.id));
+  addButton("📌 Pin",()=>toggle(n.id,"pinned"));
+  addButton("⭐ Important",()=>toggle(n.id,"important"));
+  addButton("🗑 Delete",()=>deleteNote(n.id),"delete");
+
+  card.append(h,p,badge,date,actions);
+  box.appendChild(card);
+
+ });
 }
 
-function cancelEditor() {
-    document.getElementById("editor").style.display="none";
+function showEditor(){
+ editing=null;
+ $("editorHeading").textContent="Create Note";
+ $("title").value="";
+ $("content").value="";
+ $("category").value="General";
+ $("important").checked=false;
+ $("pinned").checked=false;
+ $("editor").style.display="block";
+ window.scrollTo(0,0);
 }
 
-function saveNote() {
+function hideEditor(){
+ $("editor").style.display="none";
+}
 
-    const title=document.getElementById("title").value.trim();
-    const content=document.getElementById("content").value.trim();
+function saveNote(){
 
-    if(!title || !content) {
-        alert("Please enter a title and content.");
-        return;
-    }
+ const title=$("title").value.trim();
+ const content=$("content").value.trim();
 
-    let note={
-        id: editing || Date.now(),
-        title,
-        content,
-        category:document.getElementById("category").value,
-        important:document.getElementById("important").checked,
-        pinned:document.getElementById("pinned").checked,
-        date:new Date().toLocaleString()
-    };
+ if(!title || !content){
+  alert("Please enter a title and content.");
+  return;
+ }
 
-    if(editing) {
-        notes=notes.map(n=>n.id===editing?note:n);
-    } else {
-        notes.unshift(note);
-    }
+ const note={
+  id:editing || Date.now(),
+  title,
+  content,
+  category:$("category").value,
+  important:$("important").checked,
+  pinned:$("pinned").checked,
+  date:new Date().toLocaleString()
+ };
 
+ if(editing){
+  notes=notes.map(n=>n.id===editing?note:n);
+ }else{
+  notes.unshift(note);
+ }
+
+ saveData();
+ hideEditor();
+ render();
+}
+
+function editNote(id){
+
+ const n=notes.find(x=>x.id===id);
+ if(!n)return;
+
+ editing=id;
+ $("editorHeading").textContent="Edit Note";
+ $("title").value=n.title;
+ $("content").value=n.content;
+ $("category").value=n.category;
+ $("important").checked=n.important;
+ $("pinned").checked=n.pinned;
+ $("editor").style.display="block";
+
+ window.scrollTo(0,0);
+}
+
+function deleteNote(id){
+
+ if(confirm("Delete this note?")){
+  notes=notes.filter(n=>n.id!==id);
+  saveData();
+  render();
+ }
+}
+
+function toggle(id,key){
+ const n=notes.find(x=>x.id===id);
+ if(!n)return;
+ n[key]=!n[key];
+ saveData();
+ render();
+}
+
+// FILTERS
+
+document.querySelectorAll(".filters button").forEach(btn=>{
+
+ btn.addEventListener("click",()=>{
+
+  filter=btn.dataset.filter;
+
+  document.querySelectorAll(".filters button")
+   .forEach(b=>b.classList.remove("active"));
+
+  btn.classList.add("active");
+  render();
+
+ });
+
+});
+
+// THEME
+
+function changeTheme(){
+
+ document.body.classList.toggle("light");
+
+ localStorage.setItem(
+  "hwta_theme",
+  document.body.classList.contains("light")?"light":"dark"
+ );
+
+}
+
+if(localStorage.getItem("hwta_theme")==="light"){
+ document.body.classList.add("light");
+}
+
+// SETTINGS
+
+function toggleSettings(){
+
+ const s=$("settings");
+
+ s.style.display =
+  s.style.display==="block"?"none":"block";
+
+ if(s.style.display==="block"){
+  s.scrollIntoView({behavior:"smooth",block:"start"});
+ }
+
+}
+
+// PIN
+
+function setPin(){
+
+ const pin=prompt("Enter a new PIN (4-8 digits):");
+
+ if(pin===null)return;
+
+ if(!/^\d{4,8}$/.test(pin)){
+  alert("PIN must be 4 to 8 digits.");
+  return;
+ }
+
+ localStorage.setItem("hwta_pin",pin);
+ alert("PIN saved successfully!");
+}
+
+function removePin(){
+
+ if(confirm("Remove PIN?")){
+  localStorage.removeItem("hwta_pin");
+  alert("PIN removed.");
+ }
+
+}
+
+function unlock(){
+
+ const pin=$("pinInput").value;
+
+ if(pin===localStorage.getItem("hwta_pin")){
+  sessionStorage.setItem("hwta_unlocked","yes");
+  $("lockScreen").style.display="none";
+  $("pinInput").value="";
+ }else{
+  $("lockMessage").textContent="Incorrect PIN!";
+  $("pinInput").value="";
+ }
+
+}
+
+// BACKUP
+
+function exportNotes(){
+
+ const blob=new Blob(
+  [JSON.stringify(notes,null,2)],
+  {type:"application/json"}
+ );
+
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement("a");
+
+ a.href=url;
+ a.download="Hwta-Notes-Backup.json";
+ a.click();
+
+ URL.revokeObjectURL(url);
+}
+
+function restoreNotes(){
+
+ const file=$("backupFile").files[0];
+
+ if(!file){
+  alert("Choose a backup file.");
+  return;
+ }
+
+ const reader=new FileReader();
+
+ reader.onload=e=>{
+
+  try{
+
+   const data=JSON.parse(e.target.result);
+
+   if(!Array.isArray(data) ||
+      !data.every(n=>
+       n && typeof n.id==="number" &&
+       typeof n.title==="string" &&
+       typeof n.content==="string"
+      )){
+    throw new Error("Invalid backup");
+   }
+
+   if(confirm("Replace current notes with backup?")){
+    notes=data;
     saveData();
-    cancelEditor();
-    renderNotes();
+    render();
+    alert("Backup restored!");
+   }
+
+  }catch(err){
+   alert("Invalid backup file.");
+  }
+
+ };
+
+ reader.readAsText(file);
 }
 
-function editNote(id) {
+// BUTTON EVENTS
 
-    const note=notes.find(n=>n.id===id);
+$("newBtn").addEventListener("click",showEditor);
+$("saveBtn").addEventListener("click",saveNote);
+$("cancelBtn").addEventListener("click",hideEditor);
+$("search").addEventListener("input",render);
 
-    editing=id;
+$("themeBtn").addEventListener("click",changeTheme);
+$("settingTheme").addEventListener("click",changeTheme);
 
-    document.getElementById("editor").style.display="block";
-    document.getElementById("editorTitle").textContent="Edit Note";
-    document.getElementById("title").value=note.title;
-    document.getElementById("content").value=note.content;
-    document.getElementById("category").value=note.category;
-    document.getElementById("important").checked=note.important;
-    document.getElementById("pinned").checked=note.pinned;
+$("settingsBtn").addEventListener("click",toggleSettings);
 
-    window.scrollTo(0,0);
-}
+$("setPin").addEventListener("click",setPin);
+$("removePin").addEventListener("click",removePin);
 
-function deleteNote(id) {
+$("exportBtn").addEventListener("click",exportNotes);
+$("restoreBtn").addEventListener("click",restoreNotes);
 
-    if(confirm("Delete this note?")) {
-        notes=notes.filter(n=>n.id!==id);
-        saveData();
-        renderNotes();
-    }
-}
+$("unlockBtn").addEventListener("click",unlock);
 
-function togglePin(id) {
+// STARTUP
 
-    let n=notes.find(n=>n.id===id);
-    n.pinned=!n.pinned;
+render();
 
-    saveData();
-    renderNotes();
-}
+setTimeout(()=>{
 
-function toggleImportant(id) {
+ $("splash").style.opacity="0";
 
-    let n=notes.find(n=>n.id===id);
-    n.important=!n.important;
+ setTimeout(()=>{
+  $("splash").style.display="none";
 
-    saveData();
-    renderNotes();
-}
+  if(localStorage.getItem("hwta_pin") &&
+     sessionStorage.getItem("hwta_unlocked")!=="yes"){
+   $("lockScreen").style.display="flex";
+  }
 
-function setFilter(filter,button) {
+ },600);
 
-    currentFilter=filter;
-
-    document.querySelectorAll(".filters button").forEach(b=>b.classList.remove("active"));
-
-    button.classList.add("active");
-
-    renderNotes();
-}
-
-function renderNotes() {
-
-    let box=document.getElementById("notes");
-    let search=document.getElementById("search").value.toLowerCase();
-
-    box.innerHTML="";
-
-    let filtered=notes.filter(n=>{
-
-        let matchesSearch=n.title.toLowerCase().includes(search) ||
-        n.content.toLowerCase().includes(search);
-
-        let matchesFilter=
-            currentFilter==="All" ||
-            (currentFilter==="Pinned" && n.pinned) ||
-            (currentFilter==="Important" && n.important) ||
-            n.category===currentFilter;
-
-        return matchesSearch && matchesFilter;
-
-    }).sort((a,b)=>Number(b.pinned)-Number(a.pinned));
-
-    if(filtered.length===0) {
-        box.innerHTML='<div class="empty">No notes found.<br>Start writing your ideas!</div>';
-        return;
-    }
-
-    filtered.forEach(n=>{
-
-        let card=document.createElement("div");
-        card.className="note"+(n.pinned?" pinned":"");
-
-        let heading=document.createElement("h3");
-        heading.textContent=(n.pinned?"📌 ":"")+(n.important?"⭐ ":"")+n.title;
-
-        let text=document.createElement("p");
-        text.textContent=n.content;
-
-        let category=document.createElement("span");
-        category.className="category-label";
-        category.textContent=n.category;
-
-        let date=document.createElement("small");
-        date.textContent="Created: "+n.date;
-
-        let actions=document.createElement("div");
-        actions.className="note-actions";
-
-        function action(label,fn,cls="") {
-            let b=document.createElement("button");
-            b.textContent=label;
-            if(cls)b.className=cls;
-            b.onclick=fn;
-            actions.appendChild(b);
-        }
-
-        action("✏ Edit",()=>editNote(n.id),"secondary");
-        action("📌 Pin",()=>togglePin(n.id),"secondary");
-        action("⭐ Important",()=>toggleImportant(n.id),"secondary");
-        action("🗑 Delete",()=>deleteNote(n.id),"delete");
-
-        card.append(heading,text,category,document.createElement("br"),date,actions);
-
-        box.appendChild(card);
-
-    });
-
-}
-
-function toggleTheme() {
-    document.body.classList.toggle("light");
-    localStorage.setItem("hwta_theme",
-    document.body.classList.contains("light")?"light":"dark");
-}
-
-if(localStorage.getItem("hwta_theme")==="light") {
-    document.body.classList.add("light");
-}
-
-function toggleSettings() {
-    let s=document.getElementById("settings");
-    s.style.display=s.style.display==="block"?"none":"block";
-}
-
-function setPassword() {
-
-    let pin=prompt("Choose a PIN (4-8 digits):");
-
-    if(!pin)return;
-
-    if(!/^\d{4,8}$/.test(pin)) {
-        alert("PIN must contain 4 to 8 digits.");
-        return;
-    }
-
-    localStorage.setItem("hwta_pin",pin);
-    alert("PIN saved successfully.");
-}
-
-function removePassword() {
-    if(confirm("Remove application PIN?")) {
-        localStorage.removeItem("hwta_pin");
-        alert("PIN removed.");
-    }
-}
-
-function unlock() {
-
-    let pin=document.getElementById("pinInput").value;
-
-    if(pin===localStorage.getItem("hwta_pin")) {
-        sessionStorage.setItem("hwta_unlocked","yes");
-        document.getElementById("lockScreen").style.display="none";
-    } else {
-        document.getElementById("lockMessage").textContent="Incorrect PIN!";
-        document.getElementById("pinInput").value="";
-    }
-}
-
-function backupNotes() {
-
-    let data=JSON.stringify(notes,null,2);
-
-    let blob=new Blob([data],{type:"application/json"});
-    let url=URL.createObjectURL(blob);
-
-    let a=document.createElement("a");
-    a.href=url;
-    a.download="Hwta-Notes-Backup.json";
-    a.click();
-
-    URL.revokeObjectURL(url);
-}
-
-function restoreNotes() {
-
-    let file=document.getElementById("restoreFile").files[0];
-
-    if(!file) {
-        alert("Choose a backup file first.");
-        return;
-    }
-
-    let reader=new FileReader();
-
-    reader.onload=function(e) {
-
-        try {
-
-            let data=JSON.parse(e.target.result);
-
-            if(!Array.isArray(data) ||
-            !data.every(n=>n && typeof n.id==="number" &&
-            typeof n.title==="string" &&
-            typeof n.content==="string")) {
-                throw new Error("Invalid backup");
-            }
-
-            if(confirm("Restore backup? Current notes will be replaced.")) {
-                notes=data;
-                saveData();
-                renderNotes();
-                alert("Backup restored!");
-            }
-
-        } catch(err) {
-            alert("Invalid backup file.");
-        }
-
-    };
-
-    reader.readAsText(file);
-}
-
-renderNotes();
-
-if(localStorage.getItem("hwta_pin") &&
-sessionStorage.getItem("hwta_unlocked")!=="yes") {
-    document.getElementById("lockScreen").style.display="flex";
-}
+},1800);
 
 </script>
 
