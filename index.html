@@ -4,36 +4,41 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#07152e">
+<meta name="description" content="Hwta Notes - Your ideas, your space.">
+
 <title>Hwta Notes</title>
+
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" href="https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg">
 
 <style>
 :root {
  --bg:#080f20;
  --card:#121e35;
- --text:#fff;
+ --text:#ffffff;
  --muted:#a8b4ca;
  --red:#a71930;
  --blue:#0756a5;
  --gold:#edbd55;
 }
 
-*{box-sizing:border-box}
+* {box-sizing:border-box}
 
-body{
+body {
  margin:0;
  font-family:Arial,sans-serif;
  background:var(--bg);
  color:var(--text);
 }
 
-body.light{
+body.light {
  --bg:#edf1f8;
- --card:#fff;
+ --card:#ffffff;
  --text:#15223b;
  --muted:#64748b;
 }
 
-body:before{
+body:before {
  content:"";
  position:fixed;
  inset:0;
@@ -46,9 +51,9 @@ body:before{
  z-index:-1;
 }
 
-/* LOADING SCREEN */
+/* SPLASH SCREEN */
 
-#splash{
+#splash {
  position:fixed;
  inset:0;
  background:linear-gradient(145deg,#061633,#102d59,#65152d);
@@ -60,26 +65,26 @@ body:before{
  transition:opacity .6s;
 }
 
-#splash img{
+#splash img {
  width:115px;
  height:115px;
  object-fit:contain;
  animation:float 2s infinite ease-in-out;
 }
 
-#splash h1{
+#splash h1 {
  font-size:30px;
  margin:18px 0 5px;
 }
 
-#splash h1 span{color:var(--gold)}
+#splash h1 span {color:var(--gold)}
 
-#splash p{
+#splash p {
  color:#ccd5e7;
  font-size:13px;
 }
 
-.loader{
+.loader {
  width:160px;
  height:5px;
  background:#ffffff30;
@@ -88,7 +93,7 @@ body:before{
  margin-top:25px;
 }
 
-.loader:after{
+.loader:after {
  content:"";
  display:block;
  width:45%;
@@ -97,57 +102,56 @@ body:before{
  animation:loading 1.3s infinite;
 }
 
-@keyframes loading{
- from{transform:translateX(-100%)}
- to{transform:translateX(350%)}
+@keyframes loading {
+ from {transform:translateX(-100%)}
+ to {transform:translateX(350%)}
 }
 
-@keyframes float{
- 50%{transform:translateY(-10px)}
+@keyframes float {
+ 50% {transform:translateY(-10px)}
 }
 
 /* HEADER */
 
-header{
+header {
  padding:22px;
  background:linear-gradient(110deg,#071d42,#092d61,#641329);
  border-bottom:2px solid var(--gold);
- position:relative;
 }
 
-.brand{
+.brand {
  display:flex;
  align-items:center;
  gap:13px;
 }
 
-.brand img{
+.brand img {
  width:52px;
  height:52px;
  object-fit:contain;
 }
 
-.brand h1{
+.brand h1 {
  margin:0;
  font-size:26px;
 }
 
-.brand span{color:var(--gold)}
+.brand span {color:var(--gold)}
 
-header p{
+header p {
  margin:9px 0 0;
  color:#d1d9eb;
  font-size:13px;
 }
 
-.container{
+.container {
  max-width:800px;
  margin:auto;
  padding:18px;
  position:relative;
 }
 
-button{
+button {
  border:0;
  padding:12px 15px;
  border-radius:10px;
@@ -157,9 +161,9 @@ button{
  cursor:pointer;
 }
 
-button:active{transform:scale(.97)}
+button:active {transform:scale(.97)}
 
-input,textarea,select{
+input,textarea,select {
  width:100%;
  padding:14px;
  border:1px solid #35435d;
@@ -171,21 +175,21 @@ input,textarea,select{
  outline:none;
 }
 
-textarea{
+textarea {
  min-height:130px;
  resize:vertical;
 }
 
-.actions{
+.actions {
  display:flex;
  gap:8px;
  flex-wrap:wrap;
  margin-bottom:20px;
 }
 
-.actions button{flex:1}
+.actions button {flex:1}
 
-.section{
+.section {
  background:var(--card);
  border:1px solid #34435f;
  border-radius:14px;
@@ -193,31 +197,31 @@ textarea{
  margin-bottom:15px;
 }
 
-#editor,#settings{display:none}
+#editor,#settings {display:none}
 
-.section h2{
+.section h2 {
  font-size:19px;
  margin-top:0;
 }
 
-.filters{
+.filters {
  display:flex;
  gap:8px;
  overflow-x:auto;
  padding-bottom:12px;
 }
 
-.filters button{
+.filters button {
  white-space:nowrap;
  background:var(--card);
  border:1px solid #34435f;
 }
 
-.filters button.active{
+.filters button.active {
  background:linear-gradient(110deg,#0756a5,#a71930);
 }
 
-.note{
+.note {
  background:var(--card);
  border:1px solid #34435f;
  border-left:4px solid var(--red);
@@ -227,34 +231,37 @@ textarea{
  overflow-wrap:anywhere;
 }
 
-.note.pinned{border-left-color:var(--gold)}
+.note.pinned {border-left-color:var(--gold)}
 
-.note h3{color:var(--gold);margin-top:0}
+.note h3 {
+ color:var(--gold);
+ margin-top:0;
+}
 
-.note p{
+.note p {
  white-space:pre-wrap;
  line-height:1.6;
  color:var(--muted);
 }
 
-.note small{color:var(--muted)}
+.note small {color:var(--muted)}
 
-.note-actions{
+.note-actions {
  display:flex;
  flex-wrap:wrap;
  gap:7px;
  margin-top:13px;
 }
 
-.note-actions button{
+.note-actions button {
  font-size:12px;
  padding:9px;
 }
 
-.secondary{background:#34435f}
-.delete{background:#a71930}
+.secondary {background:#34435f}
+.delete {background:#a71930}
 
-.badge{
+.badge {
  display:inline-block;
  padding:5px 9px;
  background:#0756a555;
@@ -262,22 +269,22 @@ textarea{
  font-size:11px;
 }
 
-.empty{
+.empty {
  text-align:center;
  color:var(--muted);
  padding:30px;
 }
 
-.footer{
+.footer {
  text-align:center;
  padding:25px;
  color:var(--muted);
  font-size:13px;
 }
 
-.footer strong{color:var(--gold)}
+.footer strong {color:var(--gold)}
 
-.setting-row{
+.setting-row {
  display:flex;
  justify-content:space-between;
  align-items:center;
@@ -286,7 +293,7 @@ textarea{
  flex-wrap:wrap;
 }
 
-#lockScreen{
+#lockScreen {
  display:none;
  position:fixed;
  inset:0;
@@ -297,34 +304,32 @@ textarea{
  padding:25px;
 }
 
-.lock-box{
+.lock-box {
  text-align:center;
  width:100%;
  max-width:350px;
 }
 
-.lock-box img{
+.lock-box img {
  width:100px;
  height:100px;
  object-fit:contain;
 }
 
-#pinInput{
+#pinInput {
  text-align:center;
  letter-spacing:10px;
  font-size:22px;
 }
 
-@media(max-width:450px){
- .brand h1{font-size:23px}
- .container{padding:13px}
+@media(max-width:450px) {
+ .brand h1 {font-size:23px}
+ .container {padding:13px}
 }
 </style>
 </head>
 
 <body>
-
-<!-- SPLASH -->
 
 <div id="splash">
  <img src="https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg">
@@ -350,13 +355,10 @@ textarea{
   <button id="settingsBtn">⚙ Settings</button>
  </div>
 
- <!-- EDITOR -->
-
  <div id="editor" class="section">
   <h2 id="editorHeading">Create Note</h2>
 
   <input id="title" placeholder="Note title">
-
   <textarea id="content" placeholder="Write your thoughts..."></textarea>
 
   <select id="category">
@@ -378,8 +380,6 @@ textarea{
   <button id="cancelBtn" class="secondary">Cancel</button>
  </div>
 
- <!-- SEARCH -->
-
  <input id="search" placeholder="🔍 Search notes...">
 
  <div class="filters">
@@ -394,8 +394,6 @@ textarea{
 
  <h2>My Notes</h2>
  <div id="notes"></div>
-
- <!-- SETTINGS -->
 
  <div id="settings" class="section">
 
@@ -422,17 +420,14 @@ textarea{
   <h3>💾 Backup & Restore</h3>
 
   <button id="exportBtn">Export Notes</button>
-
   <br><br>
-
   <input type="file" id="backupFile" accept=".json">
-
   <button id="restoreBtn">Restore Notes</button>
 
   <hr>
 
   <h3>About Hwta Notes</h3>
-  <p>Version 3.0</p>
+  <p>Version 3.1</p>
   <p>Made with passion 🔵🔴</p>
 
  </div>
@@ -443,8 +438,6 @@ textarea{
  <strong>HWTA NOTES</strong>
  <p>Més que un club ❤️💙</p>
 </div>
-
-<!-- LOCK -->
 
 <div id="lockScreen">
  <div class="lock-box">
@@ -465,39 +458,33 @@ let notes = JSON.parse(localStorage.getItem("hwta_notes_v3") || "[]");
 let editing = null;
 let filter = "All";
 
-function saveData(){
+function saveData() {
  localStorage.setItem("hwta_notes_v3",JSON.stringify(notes));
 }
 
-function render(){
-
+function render() {
  const box=$("notes");
  const search=$("search").value.toLowerCase();
-
  box.innerHTML="";
 
  let list=notes.filter(n=>{
-
   const found=n.title.toLowerCase().includes(search) ||
-              n.content.toLowerCase().includes(search);
+  n.content.toLowerCase().includes(search);
 
-  const matches =
-   filter==="All" ||
+  const matches=filter==="All" ||
    (filter==="Pinned" && n.pinned) ||
    (filter==="Important" && n.important) ||
    n.category===filter;
 
   return found && matches;
-
  }).sort((a,b)=>Number(b.pinned)-Number(a.pinned));
 
- if(!list.length){
+ if(!list.length) {
   box.innerHTML='<div class="empty">No notes found. Start writing!</div>';
   return;
  }
 
  list.forEach(n=>{
-
   const card=document.createElement("div");
   card.className="note"+(n.pinned?" pinned":"");
 
@@ -517,7 +504,7 @@ function render(){
   const actions=document.createElement("div");
   actions.className="note-actions";
 
-  function addButton(label,fn,cls){
+  function addButton(label,fn,cls) {
    const b=document.createElement("button");
    b.textContent=label;
    b.className=cls||"secondary";
@@ -532,11 +519,10 @@ function render(){
 
   card.append(h,p,badge,date,actions);
   box.appendChild(card);
-
  });
 }
 
-function showEditor(){
+function showEditor() {
  editing=null;
  $("editorHeading").textContent="Create Note";
  $("title").value="";
@@ -548,16 +534,15 @@ function showEditor(){
  window.scrollTo(0,0);
 }
 
-function hideEditor(){
+function hideEditor() {
  $("editor").style.display="none";
 }
 
-function saveNote(){
-
+function saveNote() {
  const title=$("title").value.trim();
  const content=$("content").value.trim();
 
- if(!title || !content){
+ if(!title || !content) {
   alert("Please enter a title and content.");
   return;
  }
@@ -572,9 +557,9 @@ function saveNote(){
   date:new Date().toLocaleString()
  };
 
- if(editing){
+ if(editing) {
   notes=notes.map(n=>n.id===editing?note:n);
- }else{
+ } else {
   notes.unshift(note);
  }
 
@@ -583,8 +568,7 @@ function saveNote(){
  render();
 }
 
-function editNote(id){
-
+function editNote(id) {
  const n=notes.find(x=>x.id===id);
  if(!n)return;
 
@@ -596,20 +580,18 @@ function editNote(id){
  $("important").checked=n.important;
  $("pinned").checked=n.pinned;
  $("editor").style.display="block";
-
  window.scrollTo(0,0);
 }
 
-function deleteNote(id){
-
- if(confirm("Delete this note?")){
+function deleteNote(id) {
+ if(confirm("Delete this note?")) {
   notes=notes.filter(n=>n.id!==id);
   saveData();
   render();
  }
 }
 
-function toggle(id,key){
+function toggle(id,key) {
  const n=notes.find(x=>x.id===id);
  if(!n)return;
  n[key]=!n[key];
@@ -617,121 +599,76 @@ function toggle(id,key){
  render();
 }
 
-// FILTERS
-
 document.querySelectorAll(".filters button").forEach(btn=>{
-
  btn.addEventListener("click",()=>{
-
   filter=btn.dataset.filter;
-
-  document.querySelectorAll(".filters button")
-   .forEach(b=>b.classList.remove("active"));
-
+  document.querySelectorAll(".filters button").forEach(b=>b.classList.remove("active"));
   btn.classList.add("active");
   render();
-
  });
-
 });
 
-// THEME
-
-function changeTheme(){
-
+function changeTheme() {
  document.body.classList.toggle("light");
-
- localStorage.setItem(
-  "hwta_theme",
-  document.body.classList.contains("light")?"light":"dark"
- );
-
+ localStorage.setItem("hwta_theme",
+ document.body.classList.contains("light")?"light":"dark");
 }
 
-if(localStorage.getItem("hwta_theme")==="light"){
+if(localStorage.getItem("hwta_theme")==="light") {
  document.body.classList.add("light");
 }
 
-// SETTINGS
-
-function toggleSettings(){
-
+function toggleSettings() {
  const s=$("settings");
-
- s.style.display =
-  s.style.display==="block"?"none":"block";
-
- if(s.style.display==="block"){
+ s.style.display=s.style.display==="block"?"none":"block";
+ if(s.style.display==="block") {
   s.scrollIntoView({behavior:"smooth",block:"start"});
  }
-
 }
 
-// PIN
-
-function setPin(){
-
+function setPin() {
  const pin=prompt("Enter a new PIN (4-8 digits):");
-
  if(pin===null)return;
-
- if(!/^\d{4,8}$/.test(pin)){
+ if(!/^\d{4,8}$/.test(pin)) {
   alert("PIN must be 4 to 8 digits.");
   return;
  }
-
  localStorage.setItem("hwta_pin",pin);
  alert("PIN saved successfully!");
 }
 
-function removePin(){
-
- if(confirm("Remove PIN?")){
+function removePin() {
+ if(confirm("Remove PIN?")) {
   localStorage.removeItem("hwta_pin");
   alert("PIN removed.");
  }
-
 }
 
-function unlock(){
-
+function unlock() {
  const pin=$("pinInput").value;
-
- if(pin===localStorage.getItem("hwta_pin")){
+ if(pin===localStorage.getItem("hwta_pin")) {
   sessionStorage.setItem("hwta_unlocked","yes");
   $("lockScreen").style.display="none";
   $("pinInput").value="";
- }else{
+ } else {
   $("lockMessage").textContent="Incorrect PIN!";
   $("pinInput").value="";
  }
-
 }
 
-// BACKUP
-
-function exportNotes(){
-
- const blob=new Blob(
-  [JSON.stringify(notes,null,2)],
-  {type:"application/json"}
- );
-
+function exportNotes() {
+ const blob=new Blob([JSON.stringify(notes,null,2)],{type:"application/json"});
  const url=URL.createObjectURL(blob);
  const a=document.createElement("a");
-
  a.href=url;
  a.download="Hwta-Notes-Backup.json";
  a.click();
-
  URL.revokeObjectURL(url);
 }
 
-function restoreNotes(){
-
+function restoreNotes() {
  const file=$("backupFile").files[0];
-
- if(!file){
+ if(!file) {
   alert("Choose a backup file.");
   return;
  }
@@ -739,75 +676,69 @@ function restoreNotes(){
  const reader=new FileReader();
 
  reader.onload=e=>{
-
-  try{
-
+  try {
    const data=JSON.parse(e.target.result);
 
    if(!Array.isArray(data) ||
-      !data.every(n=>
-       n && typeof n.id==="number" &&
-       typeof n.title==="string" &&
-       typeof n.content==="string"
-      )){
+      !data.every(n=>n && typeof n.id==="number" &&
+      typeof n.title==="string" && typeof n.content==="string")) {
     throw new Error("Invalid backup");
    }
 
-   if(confirm("Replace current notes with backup?")){
+   if(confirm("Replace current notes with backup?")) {
     notes=data;
     saveData();
     render();
     alert("Backup restored!");
    }
-
-  }catch(err){
+  } catch(err) {
    alert("Invalid backup file.");
   }
-
  };
 
  reader.readAsText(file);
 }
 
-// BUTTON EVENTS
+/* BUTTON EVENTS */
 
 $("newBtn").addEventListener("click",showEditor);
 $("saveBtn").addEventListener("click",saveNote);
 $("cancelBtn").addEventListener("click",hideEditor);
 $("search").addEventListener("input",render);
-
 $("themeBtn").addEventListener("click",changeTheme);
 $("settingTheme").addEventListener("click",changeTheme);
-
 $("settingsBtn").addEventListener("click",toggleSettings);
-
 $("setPin").addEventListener("click",setPin);
 $("removePin").addEventListener("click",removePin);
-
 $("exportBtn").addEventListener("click",exportNotes);
 $("restoreBtn").addEventListener("click",restoreNotes);
-
 $("unlockBtn").addEventListener("click",unlock);
 
-// STARTUP
+/* STARTUP */
 
 render();
 
 setTimeout(()=>{
-
  $("splash").style.opacity="0";
-
  setTimeout(()=>{
   $("splash").style.display="none";
 
   if(localStorage.getItem("hwta_pin") &&
-     sessionStorage.getItem("hwta_unlocked")!=="yes"){
+     sessionStorage.getItem("hwta_unlocked")!=="yes") {
    $("lockScreen").style.display="flex";
   }
-
  },600);
-
 },1800);
+
+/* SERVICE WORKER */
+
+if("serviceWorker" in navigator) {
+ window.addEventListener("load",()=>{
+  navigator.serviceWorker.register("./service-worker.js")
+  .then(()=>console.log("Hwta Notes PWA Ready"))
+  .catch(error=>console.error("PWA error:",error));
+ });
+}
 
 </script>
 
