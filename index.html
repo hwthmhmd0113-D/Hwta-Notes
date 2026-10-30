@@ -3,107 +3,263 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080d1c">
 <title>Hwta Notes</title>
 
 <style>
-* {
-    box-sizing: border-box;
+:root {
+    --bg:#080d1c;
+    --card:#111a2e;
+    --card2:#17233b;
+    --text:#ffffff;
+    --muted:#9aa9c3;
+    --blue:#0756a5;
+    --red:#a71930;
+    --gold:#edbd55;
 }
 
+* {box-sizing:border-box}
+
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #101114;
-    color: white;
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:Arial,sans-serif;
+    min-height:100vh;
+}
+
+body.light {
+    --bg:#edf1f8;
+    --card:#ffffff;
+    --card2:#e2e9f4;
+    --text:#15223b;
+    --muted:#64748b;
+}
+
+body:before {
+    content:"";
+    position:fixed;
+    inset:0;
+    background:
+    linear-gradient(rgba(5,10,25,.88),rgba(5,10,25,.94)),
+    url("https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg")
+    center 48% / min(85vw,500px) no-repeat;
+    opacity:.20;
+    pointer-events:none;
+    z-index:-1;
 }
 
 header {
-    padding: 25px 20px;
-    background: #181a20;
+    padding:23px 20px;
+    background:linear-gradient(110deg,#071d42,#092d61,#641329);
+    border-bottom:2px solid var(--gold);
 }
 
-header h1 {
-    margin: 0;
-    color: #8b7cff;
-    font-size: 28px;
+.brand {
+    display:flex;
+    align-items:center;
+    gap:13px;
+}
+
+.brand img {
+    width:52px;
+    height:52px;
+    object-fit:contain;
+}
+
+.brand h1 {
+    margin:0;
+    font-size:27px;
+}
+
+.brand span {
+    color:var(--gold);
 }
 
 header p {
-    color: #999;
-    margin-bottom: 0;
+    margin:9px 0 0;
+    color:#d1d9eb;
+    font-size:13px;
 }
 
 .container {
-    padding: 20px;
-    max-width: 750px;
-    margin: auto;
+    max-width:800px;
+    margin:auto;
+    padding:18px;
+    position:relative;
 }
 
-input, textarea {
-    width: 100%;
-    padding: 15px;
-    margin-bottom: 12px;
-    border: 1px solid #30323a;
-    border-radius: 12px;
-    background: #1c1e25;
-    color: white;
-    font-size: 16px;
-    outline: none;
+input,textarea,select {
+    width:100%;
+    padding:14px;
+    border:1px solid #35435d;
+    border-radius:12px;
+    background:var(--card);
+    color:var(--text);
+    font-size:15px;
+    margin-bottom:12px;
+    outline:none;
 }
 
 textarea {
-    height: 130px;
-    resize: vertical;
+    min-height:130px;
+    resize:vertical;
 }
 
 button {
-    padding: 13px 20px;
-    border: none;
-    border-radius: 10px;
-    background: #806dff;
-    color: white;
-    font-size: 15px;
-    cursor: pointer;
+    border:0;
+    padding:12px 16px;
+    border-radius:10px;
+    background:linear-gradient(110deg,#0756a5,#a71930);
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
 }
 
-button:hover {
-    opacity: 0.85;
+button:active {transform:scale(.97)}
+
+.top-actions {
+    display:flex;
+    gap:9px;
+    flex-wrap:wrap;
+    margin-bottom:17px;
+}
+
+.top-actions button {
+    flex:1;
+}
+
+.section-title {
+    font-size:18px;
+    margin:25px 0 13px;
+}
+
+.filters {
+    display:flex;
+    gap:8px;
+    overflow-x:auto;
+    padding-bottom:12px;
+}
+
+.filters button {
+    white-space:nowrap;
+    background:var(--card2);
+    border:1px solid #35435d;
+}
+
+.filters button.active {
+    background:linear-gradient(110deg,#0756a5,#a71930);
 }
 
 .note {
-    background: #1c1e25;
-    padding: 17px;
-    border-radius: 13px;
-    margin-top: 15px;
-    border: 1px solid #30323a;
-    overflow-wrap: anywhere;
+    background:var(--card);
+    border:1px solid #34435f;
+    border-left:4px solid var(--red);
+    border-radius:14px;
+    padding:16px;
+    margin-bottom:13px;
+    overflow-wrap:anywhere;
+}
+
+.note.pinned {
+    border-left-color:var(--gold);
 }
 
 .note h3 {
-    margin-top: 0;
-    color: #a99cff;
+    margin:0 0 10px;
+    color:var(--gold);
 }
 
 .note p {
-    color: #ccc;
-    white-space: pre-wrap;
+    white-space:pre-wrap;
+    line-height:1.6;
+    color:var(--muted);
 }
 
-.delete {
-    background: #d94c5c;
-    margin-top: 8px;
+.note small {
+    color:var(--muted);
 }
 
-.edit {
-    background: #444957;
-    margin-top: 8px;
-    margin-left: 5px;
+.note-actions {
+    display:flex;
+    gap:7px;
+    flex-wrap:wrap;
+    margin-top:13px;
 }
 
-#empty {
-    text-align: center;
-    color: #777;
-    margin-top: 35px;
+.note-actions button {
+    font-size:12px;
+    padding:9px 11px;
+}
+
+.delete {background:#a71930}
+.secondary {background:#34435f}
+
+.category-label {
+    display:inline-block;
+    background:var(--card2);
+    padding:5px 9px;
+    border-radius:7px;
+    font-size:11px;
+    margin-top:5px;
+}
+
+.empty {
+    text-align:center;
+    color:var(--muted);
+    padding:35px 10px;
+}
+
+#settings {
+    display:none;
+    background:var(--card);
+    padding:18px;
+    border-radius:15px;
+    margin-top:20px;
+}
+
+.footer {
+    text-align:center;
+    padding:25px;
+    color:var(--muted);
+    font-size:13px;
+}
+
+.footer strong {color:var(--gold)}
+
+.lock-screen {
+    position:fixed;
+    inset:0;
+    z-index:20;
+    background:#080d1c;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:25px;
+}
+
+.lock-box {
+    text-align:center;
+    width:100%;
+    max-width:350px;
+}
+
+.lock-box img {
+    width:100px;
+    height:100px;
+    object-fit:contain;
+    margin-bottom:15px;
+}
+
+#pinInput {
+    text-align:center;
+    letter-spacing:12px;
+    font-size:24px;
+}
+
+@media(max-width:480px) {
+    .brand h1 {font-size:23px}
+    .container {padding:14px}
 }
 </style>
 </head>
@@ -111,117 +267,421 @@ button:hover {
 <body>
 
 <header>
-    <h1>Hwta Notes</h1>
-    <p>Your ideas. Your space.</p>
+    <div class="brand">
+        <img src="https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg" alt="Barcelona">
+        <h1>Hwta <span>Notes</span></h1>
+    </div>
+    <p>Your ideas. Your space. Més que un club 🔵🔴</p>
 </header>
 
 <div class="container">
 
-    <input id="title" placeholder="Note title">
+    <div class="top-actions">
+        <button onclick="showEditor()">＋ New Note</button>
+        <button onclick="toggleTheme()">🌙 Theme</button>
+        <button onclick="toggleSettings()">⚙ Settings</button>
+    </div>
 
-    <textarea id="content" placeholder="Write your thoughts..."></textarea>
+    <div id="editor" class="note" style="display:none">
+        <h3 id="editorTitle">Create Note</h3>
 
-    <button onclick="saveNote()">+ Save Note</button>
+        <input id="title" placeholder="Note title...">
 
-    <br><br>
+        <textarea id="content" placeholder="Write your thoughts..."></textarea>
 
-    <input id="search" placeholder="Search notes..." oninput="displayNotes()">
+        <select id="category">
+            <option>General</option>
+            <option>Personal</option>
+            <option>School</option>
+            <option>Work</option>
+            <option>Football</option>
+            <option>Goals</option>
+            <option>Ideas</option>
+        </select>
+
+        <label>
+            <input type="checkbox" id="important" style="width:auto">
+            ⭐ Important note
+        </label>
+
+        <br><br>
+
+        <label>
+            <input type="checkbox" id="pinned" style="width:auto">
+            📌 Pin note
+        </label>
+
+        <br><br>
+
+        <button onclick="saveNote()">Save Note</button>
+        <button class="secondary" onclick="cancelEditor()">Cancel</button>
+    </div>
+
+    <input id="search" placeholder="🔍 Search your notes..." oninput="renderNotes()">
+
+    <div class="filters">
+        <button class="active" onclick="setFilter('All',this)">All</button>
+        <button onclick="setFilter('Pinned',this)">📌 Pinned</button>
+        <button onclick="setFilter('Important',this)">⭐ Important</button>
+        <button onclick="setFilter('Football',this)">⚽ Football</button>
+        <button onclick="setFilter('School',this)">🎓 School</button>
+        <button onclick="setFilter('Personal',this)">👤 Personal</button>
+        <button onclick="setFilter('Work',this)">💼 Work</button>
+        <button onclick="setFilter('Goals',this)">🎯 Goals</button>
+    </div>
+
+    <h2 class="section-title">My Notes</h2>
 
     <div id="notes"></div>
 
+    <div id="settings">
+
+        <h2>⚙ Settings</h2>
+
+        <p>Application appearance</p>
+
+        <button onclick="toggleTheme()">Change Theme</button>
+
+        <hr>
+
+        <h3>🔐 Security</h3>
+
+        <button onclick="setPassword()">Set / Change PIN</button>
+        <button class="delete" onclick="removePassword()">Remove PIN</button>
+
+        <hr>
+
+        <h3>💾 Backup & Restore</h3>
+
+        <button onclick="backupNotes()">Export Notes</button>
+
+        <br><br>
+
+        <input type="file" id="restoreFile" accept=".json">
+
+        <button onclick="restoreNotes()">Restore Notes</button>
+
+        <hr>
+
+        <h3>About</h3>
+        <p>Hwta Notes v2.0</p>
+        <p>Made with passion 🔵🔴</p>
+
+    </div>
+
+</div>
+
+<div class="footer">
+    <strong>HWTA NOTES</strong><br>
+    Més que un club ❤️💙
+</div>
+
+<div class="lock-screen" id="lockScreen">
+    <div class="lock-box">
+        <img src="https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg">
+        <h2>Hwta Notes</h2>
+        <p>Enter your PIN</p>
+        <input id="pinInput" type="password" inputmode="numeric" maxlength="8">
+        <button onclick="unlock()">Unlock</button>
+        <p id="lockMessage"></p>
+    </div>
 </div>
 
 <script>
 
-let notes = JSON.parse(localStorage.getItem("hwta_notes")) || [];
+let notes = JSON.parse(localStorage.getItem("hwta_notes_v2") || "[]");
+
 let editing = null;
+let currentFilter = "All";
+
+function saveData() {
+    localStorage.setItem("hwta_notes_v2",JSON.stringify(notes));
+}
+
+function showEditor() {
+    editing = null;
+    document.getElementById("editor").style.display="block";
+    document.getElementById("editorTitle").textContent="Create Note";
+    document.getElementById("title").value="";
+    document.getElementById("content").value="";
+    document.getElementById("category").value="General";
+    document.getElementById("important").checked=false;
+    document.getElementById("pinned").checked=false;
+    window.scrollTo(0,0);
+}
+
+function cancelEditor() {
+    document.getElementById("editor").style.display="none";
+}
 
 function saveNote() {
 
-    let title = document.getElementById("title").value.trim();
-    let content = document.getElementById("content").value.trim();
+    const title=document.getElementById("title").value.trim();
+    const content=document.getElementById("content").value.trim();
 
-    if (!title || !content) {
-        alert("Please enter a title and note.");
+    if(!title || !content) {
+        alert("Please enter a title and content.");
         return;
     }
 
-    if (editing !== null) {
-        notes[editing] = {title, content};
-        editing = null;
+    let note={
+        id: editing || Date.now(),
+        title,
+        content,
+        category:document.getElementById("category").value,
+        important:document.getElementById("important").checked,
+        pinned:document.getElementById("pinned").checked,
+        date:new Date().toLocaleString()
+    };
+
+    if(editing) {
+        notes=notes.map(n=>n.id===editing?note:n);
     } else {
-        notes.unshift({title, content});
+        notes.unshift(note);
     }
 
-    localStorage.setItem("hwta_notes", JSON.stringify(notes));
-
-    document.getElementById("title").value = "";
-    document.getElementById("content").value = "";
-
-    displayNotes();
+    saveData();
+    cancelEditor();
+    renderNotes();
 }
 
-function displayNotes() {
+function editNote(id) {
 
-    let box = document.getElementById("notes");
-    let search = document.getElementById("search").value.toLowerCase();
+    const note=notes.find(n=>n.id===id);
 
-    box.innerHTML = "";
+    editing=id;
 
-    let filtered = notes.map((note, index) => ({...note, index}))
-        .filter(note =>
-            note.title.toLowerCase().includes(search) ||
-            note.content.toLowerCase().includes(search)
-        );
+    document.getElementById("editor").style.display="block";
+    document.getElementById("editorTitle").textContent="Edit Note";
+    document.getElementById("title").value=note.title;
+    document.getElementById("content").value=note.content;
+    document.getElementById("category").value=note.category;
+    document.getElementById("important").checked=note.important;
+    document.getElementById("pinned").checked=note.pinned;
 
-    if (filtered.length === 0) {
-        box.innerHTML = '<div id="empty">No notes found.</div>';
+    window.scrollTo(0,0);
+}
+
+function deleteNote(id) {
+
+    if(confirm("Delete this note?")) {
+        notes=notes.filter(n=>n.id!==id);
+        saveData();
+        renderNotes();
+    }
+}
+
+function togglePin(id) {
+
+    let n=notes.find(n=>n.id===id);
+    n.pinned=!n.pinned;
+
+    saveData();
+    renderNotes();
+}
+
+function toggleImportant(id) {
+
+    let n=notes.find(n=>n.id===id);
+    n.important=!n.important;
+
+    saveData();
+    renderNotes();
+}
+
+function setFilter(filter,button) {
+
+    currentFilter=filter;
+
+    document.querySelectorAll(".filters button").forEach(b=>b.classList.remove("active"));
+
+    button.classList.add("active");
+
+    renderNotes();
+}
+
+function renderNotes() {
+
+    let box=document.getElementById("notes");
+    let search=document.getElementById("search").value.toLowerCase();
+
+    box.innerHTML="";
+
+    let filtered=notes.filter(n=>{
+
+        let matchesSearch=n.title.toLowerCase().includes(search) ||
+        n.content.toLowerCase().includes(search);
+
+        let matchesFilter=
+            currentFilter==="All" ||
+            (currentFilter==="Pinned" && n.pinned) ||
+            (currentFilter==="Important" && n.important) ||
+            n.category===currentFilter;
+
+        return matchesSearch && matchesFilter;
+
+    }).sort((a,b)=>Number(b.pinned)-Number(a.pinned));
+
+    if(filtered.length===0) {
+        box.innerHTML='<div class="empty">No notes found.<br>Start writing your ideas!</div>';
         return;
     }
 
-    filtered.forEach(note => {
+    filtered.forEach(n=>{
 
-        box.innerHTML += `
-        <div class="note">
-            <h3>${escapeHTML(note.title)}</h3>
-            <p>${escapeHTML(note.content)}</p>
-            <button class="delete" onclick="deleteNote(${note.index})">Delete</button>
-            <button class="edit" onclick="editNote(${note.index})">Edit</button>
-        </div>`;
+        let card=document.createElement("div");
+        card.className="note"+(n.pinned?" pinned":"");
+
+        let heading=document.createElement("h3");
+        heading.textContent=(n.pinned?"📌 ":"")+(n.important?"⭐ ":"")+n.title;
+
+        let text=document.createElement("p");
+        text.textContent=n.content;
+
+        let category=document.createElement("span");
+        category.className="category-label";
+        category.textContent=n.category;
+
+        let date=document.createElement("small");
+        date.textContent="Created: "+n.date;
+
+        let actions=document.createElement("div");
+        actions.className="note-actions";
+
+        function action(label,fn,cls="") {
+            let b=document.createElement("button");
+            b.textContent=label;
+            if(cls)b.className=cls;
+            b.onclick=fn;
+            actions.appendChild(b);
+        }
+
+        action("✏ Edit",()=>editNote(n.id),"secondary");
+        action("📌 Pin",()=>togglePin(n.id),"secondary");
+        action("⭐ Important",()=>toggleImportant(n.id),"secondary");
+        action("🗑 Delete",()=>deleteNote(n.id),"delete");
+
+        card.append(heading,text,category,document.createElement("br"),date,actions);
+
+        box.appendChild(card);
+
     });
+
 }
 
-function deleteNote(index) {
+function toggleTheme() {
+    document.body.classList.toggle("light");
+    localStorage.setItem("hwta_theme",
+    document.body.classList.contains("light")?"light":"dark");
+}
 
-    if (confirm("Delete this note?")) {
-        notes.splice(index, 1);
-        localStorage.setItem("hwta_notes", JSON.stringify(notes));
-        displayNotes();
+if(localStorage.getItem("hwta_theme")==="light") {
+    document.body.classList.add("light");
+}
+
+function toggleSettings() {
+    let s=document.getElementById("settings");
+    s.style.display=s.style.display==="block"?"none":"block";
+}
+
+function setPassword() {
+
+    let pin=prompt("Choose a PIN (4-8 digits):");
+
+    if(!pin)return;
+
+    if(!/^\d{4,8}$/.test(pin)) {
+        alert("PIN must contain 4 to 8 digits.");
+        return;
+    }
+
+    localStorage.setItem("hwta_pin",pin);
+    alert("PIN saved successfully.");
+}
+
+function removePassword() {
+    if(confirm("Remove application PIN?")) {
+        localStorage.removeItem("hwta_pin");
+        alert("PIN removed.");
     }
 }
 
-function editNote(index) {
+function unlock() {
 
-    document.getElementById("title").value = notes[index].title;
-    document.getElementById("content").value = notes[index].content;
+    let pin=document.getElementById("pinInput").value;
 
-    editing = index;
-    window.scrollTo(0, 0);
+    if(pin===localStorage.getItem("hwta_pin")) {
+        sessionStorage.setItem("hwta_unlocked","yes");
+        document.getElementById("lockScreen").style.display="none";
+    } else {
+        document.getElementById("lockMessage").textContent="Incorrect PIN!";
+        document.getElementById("pinInput").value="";
+    }
 }
 
-function escapeHTML(text) {
-    return text.replace(/[&<>"']/g, char => ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#039;"
-    })[char]);
+function backupNotes() {
+
+    let data=JSON.stringify(notes,null,2);
+
+    let blob=new Blob([data],{type:"application/json"});
+    let url=URL.createObjectURL(blob);
+
+    let a=document.createElement("a");
+    a.href=url;
+    a.download="Hwta-Notes-Backup.json";
+    a.click();
+
+    URL.revokeObjectURL(url);
 }
 
-displayNotes();
+function restoreNotes() {
+
+    let file=document.getElementById("restoreFile").files[0];
+
+    if(!file) {
+        alert("Choose a backup file first.");
+        return;
+    }
+
+    let reader=new FileReader();
+
+    reader.onload=function(e) {
+
+        try {
+
+            let data=JSON.parse(e.target.result);
+
+            if(!Array.isArray(data) ||
+            !data.every(n=>n && typeof n.id==="number" &&
+            typeof n.title==="string" &&
+            typeof n.content==="string")) {
+                throw new Error("Invalid backup");
+            }
+
+            if(confirm("Restore backup? Current notes will be replaced.")) {
+                notes=data;
+                saveData();
+                renderNotes();
+                alert("Backup restored!");
+            }
+
+        } catch(err) {
+            alert("Invalid backup file.");
+        }
+
+    };
+
+    reader.readAsText(file);
+}
+
+renderNotes();
+
+if(localStorage.getItem("hwta_pin") &&
+sessionStorage.getItem("hwta_unlocked")!=="yes") {
+    document.getElementById("lockScreen").style.display="flex";
+}
 
 </script>
 
 </body>
-  </html>
+    </html>
