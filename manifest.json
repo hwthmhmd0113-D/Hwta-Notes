@@ -1,0 +1,18 @@
+{
+  "name": "Hwta Notes",
+  "short_name": "Hwta Notes",
+  "description": "Your ideas. Your space.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#080f20",
+  "theme_color": "#07152e",
+  "icons": [
+    {
+      "src": "https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
