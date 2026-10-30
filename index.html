@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hwta Notes</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #101114;
+    color: white;
+}
+
+header {
+    padding: 25px 20px;
+    background: #181a20;
+}
+
+header h1 {
+    margin: 0;
+    color: #8b7cff;
+    font-size: 28px;
+}
+
+header p {
+    color: #999;
+    margin-bottom: 0;
+}
+
+.container {
+    padding: 20px;
+    max-width: 750px;
+    margin: auto;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 12px;
+    border: 1px solid #30323a;
+    border-radius: 12px;
+    background: #1c1e25;
+    color: white;
+    font-size: 16px;
+    outline: none;
+}
+
+textarea {
+    height: 130px;
+    resize: vertical;
+}
+
+button {
+    padding: 13px 20px;
+    border: none;
+    border-radius: 10px;
+    background: #806dff;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.85;
+}
+
+.note {
+    background: #1c1e25;
+    padding: 17px;
+    border-radius: 13px;
+    margin-top: 15px;
+    border: 1px solid #30323a;
+    overflow-wrap: anywhere;
+}
+
+.note h3 {
+    margin-top: 0;
+    color: #a99cff;
+}
+
+.note p {
+    color: #ccc;
+    white-space: pre-wrap;
+}
+
+.delete {
+    background: #d94c5c;
+    margin-top: 8px;
+}
+
+.edit {
+    background: #444957;
+    margin-top: 8px;
+    margin-left: 5px;
+}
+
+#empty {
+    text-align: center;
+    color: #777;
+    margin-top: 35px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Hwta Notes</h1>
+    <p>Your ideas. Your space.</p>
+</header>
+
+<div class="container">
+
+    <input id="title" placeholder="Note title">
+
+    <textarea id="content" placeholder="Write your thoughts..."></textarea>
+
+    <button onclick="saveNote()">+ Save Note</button>
+
+    <br><br>
+
+    <input id="search" placeholder="Search notes..." oninput="displayNotes()">
+
+    <div id="notes"></div>
+
+</div>
+
+<script>
+
+let notes = JSON.parse(localStorage.getItem("hwta_notes")) || [];
+let editing = null;
+
+function saveNote() {
+
+    let title = document.getElementById("title").value.trim();
+    let content = document.getElementById("content").value.trim();
+
+    if (!title || !content) {
+        alert("Please enter a title and note.");
+        return;
+    }
+
+    if (editing !== null) {
+        notes[editing] = {title, content};
+        editing = null;
+    } else {
+        notes.unshift({title, content});
+    }
+
+    localStorage.setItem("hwta_notes", JSON.stringify(notes));
+
+    document.getElementById("title").value = "";
+    document.getElementById("content").value = "";
+
+    displayNotes();
+}
+
+function displayNotes() {
+
+    let box = document.getElementById("notes");
+    let search = document.getElementById("search").value.toLowerCase();
+
+    box.innerHTML = "";
+
+    let filtered = notes.map((note, index) => ({...note, index}))
+        .filter(note =>
+            note.title.toLowerCase().includes(search) ||
+            note.content.toLowerCase().includes(search)
+        );
+
+    if (filtered.length === 0) {
+        box.innerHTML = '<div id="empty">No notes found.</div>';
+        return;
+    }
+
+    filtered.forEach(note => {
+
+        box.innerHTML += `
+        <div class="note">
+            <h3>${escapeHTML(note.title)}</h3>
+            <p>${escapeHTML(note.content)}</p>
+            <button class="delete" onclick="deleteNote(${note.index})">Delete</button>
+            <button class="edit" onclick="editNote(${note.index})">Edit</button>
+        </div>`;
+    });
+}
+
+function deleteNote(index) {
+
+    if (confirm("Delete this note?")) {
+        notes.splice(index, 1);
+        localStorage.setItem("hwta_notes", JSON.stringify(notes));
+        displayNotes();
+    }
+}
+
+function editNote(index) {
+
+    document.getElementById("title").value = notes[index].title;
+    document.getElementById("content").value = notes[index].content;
+
+    editing = index;
+    window.scrollTo(0, 0);
+}
+
+function escapeHTML(text) {
+    return text.replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+    })[char]);
+}
+
+displayNotes();
+
+</script>
+
+</body>
+  </html>
